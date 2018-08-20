@@ -1,0 +1,40 @@
+<div class="jumbotron" style="padding: 45px 5px;">
+  <h4 class="text-center">
+    Vacation App
+  </h4>
+</div>
+
+<p>Add new vacation request</p>
+<div class="input-group">
+  <input type="text" class="form-control" #userName (keyup.enter)="onAdd(userName)">
+  <div class="input-group-addon hover-cursor" (click)="onAdd(userName)">
+    <i class="fa fa-plus-circle fa-2x"></i>
+  </div>
+</div>
+
+<div style="margin: 5px 0px;">
+  <ul class="list-group">
+    <div *ngFor="let item of vacationListArray">
+      <li [ngClass]="!!item.dateTime ? item.isApprove ? 'bg-success text-white' : 'bg-danger text-white' : ''" 
+        class="list-group-item">
+        <button 
+          [disabled]="item.isApprove && !!item.dateTime" 
+          type="button" class="btn btn-success" 
+          (click)="onApprove(item.$key)">Approve</button>
+        <button 
+          [disabled]="!item.isApprove && !!item.dateTime" 
+          type="button" class="btn btn-danger" 
+          (click)="onReject(item.$key)">Reject</button>
+        <button
+          type="button" class="btn btn-primary" 
+          (click)="onShowInfo(item.$key, item.showInfo)">Info</button>
+       User name: {{item.userName}} - days({{item.additionalInfo.days}})
+      </li>
+      <div class="more-info" *ngIf="item.showInfo">
+          <div>{{item.additionalInfo.info}}</div>
+          <div>{{item.additionalInfo.additionalComments}}</div>
+          <div>Days: {{item.additionalInfo.days}}</div>
+      </div>
+    </div>
+  </ul>
+</div>
